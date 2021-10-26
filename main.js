@@ -12,8 +12,8 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(10);                                     // Camera positionZ
-camera.position.setY(2);                                      // Camera positionY
+camera.position.setZ(5);                                     // Camera positionZ
+camera.position.setY(1);                                      // Camera positionY
 renderer.render(scene, camera);
 
 // Ground
@@ -23,14 +23,20 @@ const ground = new THREE.Mesh(ground_geometry, ground_texture);
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
+// Origin
+const origin_geometry = new THREE.CylinderGeometry( 1, 2, 2, 100 );
+const origin_material = new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} );
+const origin = new THREE.Mesh( origin_geometry, origin_material );
+scene.add( origin );
+
 // Planet1
-const planet1_geometry = new THREE.SphereGeometry( 10, 10, 100 );
-const planet1_texture = new THREE.MeshStandardMaterial( { color: 0xffff00 } )
-const planet1 = new THREE.Mesh(planet1_geometry, planet1_texture);
-planet1.translateY(100);
-planet1.translateZ(-300);
-planet1.translateX(0);
-scene.add(planet1)
+const planet_geometry = new THREE.SphereGeometry( 10, 10, 100 );
+const planet_texture = new THREE.MeshStandardMaterial( { color: 0xffff00 } )
+const planet = new THREE.Mesh(planet_geometry, planet_texture);
+planet.translateY(100);
+planet.translateZ(-300);
+planet.translateX(0);
+scene.add(planet)
 
 // Lights
 const pointLight = new THREE.PointLight(0xffffff);
@@ -43,15 +49,17 @@ const gridHelper = new THREE.GridHelper(1000,1000);
 scene.add(lightHelper, gridHelper); 
 
 const controls = new OrbitControls(camera, renderer.domElement);
-
+controls.rotateSpeed = 0.1;
+controls.zoomSpeed = 0.0;
+controls.staticMoving = true;
+controls.dynamicDampingFactor = 0.3;
 
 function animate() {
   requestAnimationFrame(animate);
 
-  planet1.rotation.x += 0.01;
-  planet1.rotation.y += 0.005;
-  planet1.rotation.z += 0.01;
-
+  planet.rotation.x += 0.01;
+  planet.rotation.y += 0.005;
+  planet.rotation.z += 0.01;
   controls.update();
 
   renderer.render(scene, camera);
@@ -59,3 +67,19 @@ function animate() {
 }
 
 animate();
+
+document.addEventListener("keydown", onDocumentKeyDown, false);
+function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    if (keyCode == 87) {
+        scene.position.z += 0.1;
+    } else if (keyCode == 83) {
+      scene.position.z -= 0.1;
+    } else if (keyCode == 65) {
+      scene.position.x += 0.1;
+    } else if (keyCode == 68) {
+      scene.position.x -= 0.1;
+    } else if (keyCode == 32) {
+      console.log(scene.position)
+    }
+};
