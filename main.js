@@ -38,6 +38,14 @@ planet.translateZ(-300);
 planet.translateX(0);
 scene.add(planet)
 
+//character
+var PLAYERX = 0.5 , PLAYERY = 2, PLAYERZ = 0.5;
+const player_geometry = new THREE.BoxGeometry( PLAYERX, PLAYERY, PLAYERZ, 50 );
+const player_material = new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} );
+const player = new THREE.Mesh( player_geometry, player_material );
+player.position.z += 3;
+scene.add( player );
+
 // Lights
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 50, 0);
@@ -50,7 +58,7 @@ scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.rotateSpeed = 0.1;
-controls.zoomSpeed = 0.0;
+controls.zoomSpeed = 1.0;
 controls.staticMoving = true;
 controls.dynamicDampingFactor = 0.3;
 
@@ -72,13 +80,17 @@ document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 87) {
-        scene.position.z += 0.1;
+        scene.position.z += 0.02;
+        player.position.z -= 0.02;
     } else if (keyCode == 83) {
-      scene.position.z -= 0.1;
+      scene.position.z -= 0.02;
+      player.position.z += 0.02;
     } else if (keyCode == 65) {
-      scene.position.x += 0.1;
+      scene.position.x += 0.02;
+      player.position.x -= 0.02;
     } else if (keyCode == 68) {
-      scene.position.x -= 0.1;
+      scene.position.x -= 0.02;
+      player.position.x += 0.02;
     } else if (keyCode == 32) {
       console.log(scene.position)
     }
