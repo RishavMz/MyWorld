@@ -28,9 +28,6 @@ const textureLoader = new THREE.TextureLoader();
 const ground = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, BORDER_LIMIT), new THREE.MeshBasicMaterial({color: 0x74b72e}));
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
-const base = new THREE.Mesh( new THREE.BoxGeometry( 100, 2, 100, 50 ), new THREE.MeshBasicMaterial( {color: 0x654321} ) );
-base.position.y -= 1.1;
-scene.add( base );
 
 // Origin
 const origin = new THREE.Mesh(  new THREE.CylinderGeometry( 1, 2, 2, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ));
@@ -44,35 +41,37 @@ planet.translateX(0);
 scene.add(planet)
 
 //character
-const player = new THREE.Mesh( new THREE.BoxGeometry( 0.5, 2, 0.5, 50 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
+const player = new THREE.Mesh( new THREE.CylinderGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
 player.position.z += 3;
+player.position.y += 0.1;
 scene.add( player );
 
 // CONTENTS
-const project1 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project1.position.x -= 10;
-project1.position.z -= 5;
-scene.add( project1 );
-const project2 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project2.position.x -= 10;
-project2.position.z -= 10;
-scene.add( project2 );
-const project3 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project3.position.x -= 10;
-project3.position.z -= 15;
-scene.add( project3 );
-const project4 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project4.position.x -= 15;
-project4.position.z -= 5;
-scene.add( project4 );
-const project5 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project5.position.x -= 15;
-project5.position.z -= 10;
-scene.add( project5 );
-const project6 = new THREE.Mesh( new THREE.BoxGeometry( 2, 1, 2, 5 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-project6.position.x -= 15;
-project6.position.z -= 15;
-scene.add( project6 );
+
+class ProjectCylinder{
+  constructor(sceneBG){
+    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2, 2, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
+    sceneBG.add(this.data)
+  }
+  changeX(pos) {
+    this.data.position.x += pos;
+  }
+  changeY(pos) {
+    this.data.position.y += pos; 
+  }
+  changeZ(pos) {
+    this.data.position.z += pos;
+  }
+}
+
+const projects = [];
+for(var i=0; i<6; i++){
+  projects.push(new ProjectCylinder(scene));
+}
+for(var i=0; i<6; i++){
+  projects[i].changeZ(-10 - (i%3)*8);
+  projects[i].changeX(-10 - (i/3)*8);
+}
 
 // Lights
 const pointLight = new THREE.PointLight(0xffffff);
@@ -95,6 +94,11 @@ function animate() {
   planet.rotation.x += 0.01;
   planet.rotation.y += 0.005;
   planet.rotation.z += 0.01;
+  player.rotation.y += 0.05;
+
+  projects.forEach(e => {
+    e.data.rotation.y += 0.005;
+  });
 
   controls.update();
   renderer.render(scene, camera);
