@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // VARIABLES
 
-const WALK_SPEED = 1;
+const WALK_SPEED = 0.05;
 const BORDER_LIMIT = 128;
 const BORDER = 10;
 const trees = [];
@@ -57,7 +57,7 @@ const projectData = [
     "posx": 10,
     "posz": 13,
     "rad": 2,
-    "image": "images/discordbot.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/discordbot.png",
     "title": "Discord bot for Competitive Programming",
     "details": "<ul><li>A discord bot developed using discord.py module to notify members about upcoming contests.</li><li> Provides custom rank list based on peers whose handles are added to database.</li><li> Deployed the application using Heroku.</li></ul>"
   },
@@ -66,7 +66,7 @@ const projectData = [
     "posx": 18,
     "posz": 13,
     "rad": 2,
-    "image": "images/image2pdf.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/image2pdf.png",
     "title": "Image to PDF Converter",
     "details": "<ul><li>GUI based desktop application which allows user to select some images and add them to a PDF file.</li><li>Used Python for making API calls and backend tasks, while used C++ to develop an interactive GUI</li><li> Used python-docx and docx2pdf modules which use the Microsoft Office API.</li></ul>"
   },
@@ -75,7 +75,7 @@ const projectData = [
     "posx": 13,
     "posz": 21,
     "rad": 2,
-    "image": "images/ieesb.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/ieesb.png",
     "title": "IEEE SB Website",
     "details": "<ul><li>Worked in a team to develop IEEE student branch website for our institute using MERN stack.</li><li>Dedicated admin section provided to dynamically modify all the visible contents of the website.</li></ul>"
   },
@@ -84,7 +84,7 @@ const projectData = [
     "posx": 21,
     "posz": 21,
     "rad": 2,
-    "image": "images/opencodecompete.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/opencodecompete.png",
     "title": "OpenCodeCompete",
     "details": "<ul><li>Web Application developed using PERN stack where users solve problems by using some code.</li><li> Integrated CI/CD for this application using Vercel.</li></ul>"
   },
@@ -93,7 +93,7 @@ const projectData = [
     "posx": 23,
     "posz": 29,
     "rad": 2,
-    "image": "images/hoodieshopping.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/hoodieshopping.png",
     "title": "Hoodie Whopping Website",
     "details": "<ul><li>A Web based application which allows customers to select a product of their choice from a list of items.</li><li>Developen this application using PHP as backend and MySQL database</li></ul> "
   },
@@ -126,11 +126,11 @@ const textureLoader = new THREE.TextureLoader();
 
 // SHAPES
 
-const ground_image = textureLoader.load('./textures/ground1.jpg');
-const brick_image = textureLoader.load('./textures/brick.jpg');
-const tree_image1 = textureLoader.load('./textures/tree1.jpg');
-const tree_image2 = textureLoader.load('./textures/tree2.jpg');
-const mountain_image = textureLoader.load('./textures/mountain.png');
+const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
+const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
+const tree_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree1.jpg');
+const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree2.jpg');
+const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/mountain.png');
 
 tree_image2.wrapS = THREE.RepeatWrapping;
 tree_image2.wrapT = THREE.RepeatWrapping;
