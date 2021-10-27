@@ -5,7 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // VARIABLES
 
 const WALK_SPEED = 0.1;
-const BORDER_LIMIT = 100;
+const BORDER_LIMIT = 128;
 const BORDER = 10;
 
 // SETUP
@@ -25,8 +25,14 @@ const textureLoader = new THREE.TextureLoader();
 
 // SHAPES
 
+const ground_image = textureLoader.load('./textures/ground1.jpg');
+const brick_image = textureLoader.load('./textures/brick.jpg');
+
 // Ground
-const ground = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, BORDER_LIMIT), new THREE.MeshBasicMaterial({map: textureLoader.load('./textures/ground.jpg')}));
+const ground = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, BORDER_LIMIT), new THREE.MeshBasicMaterial({map: ground_image}));
+ground_image.wrapS = THREE.RepeatWrapping;
+ground_image.wrapT = THREE.RepeatWrapping;
+ground_image.repeat.set(32, 32);
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
@@ -41,6 +47,15 @@ planet.translateZ(-300);
 planet.translateX(0);
 scene.add(planet)
 
+// Pyramid
+//const pyramid = new THREE.Mesh( new THREE.ConeGeometry( 10, 6, 4 ), new THREE.MeshBasicMaterial( {map: pyramid_image} ) );
+//pyramid.translateX(2);
+//pyramid.translateZ(-50);
+//pyramid_image.wrapS = THREE.RepeatWrapping;
+//pyramid_image.wrapT = THREE.RepeatWrapping;
+//pyramid_image.repeat.set(4, 4);
+//scene.add( pyramid );
+
 //character
 const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
 player.position.z += 3;
@@ -51,7 +66,10 @@ scene.add( player );
 
 class ProjectCylinder{
   constructor(sceneBG){
-    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2, 2, 100 ), new THREE.MeshBasicMaterial( {map: textureLoader.load('./textures/brick.jpg')} ) );
+    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2, 2, 100 ), new THREE.MeshBasicMaterial( {map: brick_image} ) );
+    brick_image.wrapS = THREE.RepeatWrapping;
+    brick_image.wrapT = THREE.RepeatWrapping;
+    brick_image.repeat.set(2, 2);
     sceneBG.add(this.data)
   }
   changeX(pos) {
