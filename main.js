@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // VARIABLES
 
-const WALK_SPEED = 0.05;
+const WALK_SPEED = 1;
 const BORDER_LIMIT = 128;
 const BORDER = 10;
 const trees = [];
@@ -15,32 +15,95 @@ const mountain = [];
 
 class ProjectCylinder{
   constructor(sceneBG){
-    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 1, 2, 2, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-    sceneBG.add(this.data)
+    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 1, 4, 100 ), new THREE.MeshBasicMaterial( {map: pillar_image} ) );
+    this.ball = new THREE.Mesh( new THREE.SphereGeometry(1, 50, 10), new THREE.MeshBasicMaterial( {map: radiate_ball} ) );
+    sceneBG.add(this.data);
+    sceneBG.add(this.ball);
+    this.ball.translateY(2);
   }
-  changeX(pos) {  this.data.position.x += pos; }
-  changeY(pos) {  this.data.position.y += pos; }
-  changeZ(pos) {  this.data.position.z += pos; }
+  changeX(pos) {  this.data.position.x += pos;  this.ball.position.x += pos; }
+  changeY(pos) {  this.data.position.y += pos;  this.ball.position.y += pos; }
+  changeZ(pos) {  this.data.position.z += pos;  this.ball.position.z += pos; }
 }
 
 class Tree{
   constructor(sceneBG){
-    this.bark = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 2, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.bark = new THREE.Mesh( new THREE.CylinderGeometry( 0.2, 0.4, 4, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.branch1 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.branch2 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.branch3 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.branch4 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.branch1.translateY(1.5);
+    this.branch2.translateY(1.5);
+    this.branch3.translateY(1.5);
+    this.branch4.translateY(1.5);
+    this.branch1.translateX(0.2);
+    this.branch2.translateX(-0.2);
+    this.branch3.translateZ(0.2);
+    this.branch4.translateZ(-0.2);
+    this.branch1.rotation.z = -22.5;
+    this.branch2.rotation.z = 22.5;
+    this.branch3.rotation.x = 22.5;
+    this.branch4.rotation.x = -22.5;
     this.top = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
-    this.top.position.y += 1.5;
+    this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top2 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top3 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top4 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top.position.y += 2.8;
+    this.top1.position.x += 0.5;
+    this.top2.position.x -= 0.5;
+    this.top3.position.z += 0.5;
+    this.top4.position.z -= 0.5;
+    this.top1.position.y += 2.5;
+    this.top2.position.y += 2.5;
+    this.top3.position.y += 2.5;
+    this.top4.position.y += 2.5;
     sceneBG.add(this.bark);
+    sceneBG.add(this.branch1);
+    sceneBG.add(this.branch2);
+    sceneBG.add(this.branch3);
+    sceneBG.add(this.branch4);
     sceneBG.add(this.top);
+    sceneBG.add(this.top1);
+    sceneBG.add(this.top2);
+    sceneBG.add(this.top3);
+    sceneBG.add(this.top4);
   }changeX(pos) {
     this.top.position.x += pos;
+    this.top1.position.x += pos;
+    this.top2.position.x += pos;
+    this.top3.position.x += pos;
+    this.top4.position.x += pos;
     this.bark.position.x += pos;
+    this.branch1.position.x += pos;
+    this.branch2.position.x += pos;
+    this.branch3.position.x += pos;
+    this.branch4.position.x += pos;
   }
   changeY(pos) {
     this.top.position.y += pos;
+    this.top1.position.y += pos;
+    this.top2.position.y += pos;
+    this.top3.position.y += pos;
+    this.top4.position.y += pos;
     this.bark.position.y += pos; 
+    this.branch1.position.y += pos;
+    this.branch2.position.y += pos;
+    this.branch3.position.y += pos;
+    this.branch4.position.y += pos;
   }
   changeZ(pos) {
     this.top.position.z += pos;
+    this.top1.position.z += pos;
+    this.top2.position.z += pos;
+    this.top3.position.z += pos;
+    this.top4.position.z += pos;
     this.bark.position.z += pos;
+    this.branch1.position.z += pos;
+    this.branch2.position.z += pos;
+    this.branch3.position.z += pos;
+    this.branch4.position.z += pos;
   }
 }
 
@@ -63,7 +126,7 @@ const projectData = [
   },
   {
     "id": 2,
-    "posx": 18,
+    "posx": 20,
     "posz": 13,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/image2pdf.png",
@@ -72,8 +135,8 @@ const projectData = [
   },
   {
     "id": 3,
-    "posx": 13,
-    "posz": 21,
+    "posx": 10,
+    "posz": 23,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/ieesb.png",
     "title": "IEEE SB Website",
@@ -81,8 +144,8 @@ const projectData = [
   },
   {
     "id": 4,
-    "posx": 21,
-    "posz": 21,
+    "posx": 20,
+    "posz": 23,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/opencodecompete.png",
     "title": "OpenCodeCompete",
@@ -90,8 +153,8 @@ const projectData = [
   },
   {
     "id": 5,
-    "posx": 23,
-    "posz": 29,
+    "posx": 10,
+    "posz": 33,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/hoodieshopping.png",
     "title": "Hoodie Whopping Website",
@@ -99,8 +162,8 @@ const projectData = [
   },
   {
     "id": 6,
-    "posx": 15,
-    "posz": 29,
+    "posx": 20,
+    "posz": 33,
     "rad": 2,
     "image": "",
     "title": "Project6",
@@ -128,6 +191,8 @@ const textureLoader = new THREE.TextureLoader();
 
 const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
 const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
+const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tesseract.jpg');
+const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar1.jpg');
 const tree_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree1.jpg');
 const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree2.jpg');
 const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/mountain.png');
@@ -135,6 +200,10 @@ const mountain_image = textureLoader.load('https://raw.githubusercontent.com/Ris
 tree_image2.wrapS = THREE.RepeatWrapping;
 tree_image2.wrapT = THREE.RepeatWrapping;
 tree_image2.repeat.set(4, 4);
+
+radiate_ball.wrapS = THREE.RepeatWrapping;
+radiate_ball.wrapT = THREE.RepeatWrapping;
+radiate_ball.repeat.set(4, 4);
 
 mountain_image.wrapS = THREE.RepeatWrapping;
 mountain_image.wrapT = THREE.RepeatWrapping;
@@ -171,19 +240,38 @@ scene.add( player );
 for(var i=0; i<6; i++){
   projects.push(new ProjectCylinder(scene));
 }
-for(var i=0; i<6; i++){
-  projects[i].changeZ(-10 - (i%3)*8);
-  projects[i].changeX(-10 - (i/3)*8);
+var tempprojk = 0;
+for(var i=0; i<2; i++){
+  for(var j=0; j<3; j++){
+    projects[tempprojk].changeX(-10 -10*i);
+    projects[tempprojk].changeZ(-10 - 10*j);
+    tempprojk++;
+  }
 }
 
-for(var i=0; i<64; i++){
+var temptreek = 0;
+for(var i=0; i<48; i++){
     trees.push(new Tree(scene));
 }
-for(var i=0; i<8; i++){
-  for(var j=0; j<8; j++){
-    trees[i*8+j].changeX( -8-i*7);
-    trees[i*8+j].changeZ( 8+j*7);
-    console.log(i,j)
+for(var i=0; i<4; i++){
+  for(var j=0; j<4; j++){
+    trees[temptreek].changeX( 8+i*12);
+    trees[temptreek].changeZ( 8+j*12);
+    temptreek++;
+  }
+}
+for(var i=0; i<4; i++){
+  for(var j=0; j<4; j++){
+    trees[temptreek].changeX( -8-i*12);
+    trees[temptreek].changeZ(  8+j*12 );
+    temptreek++;
+  }
+}
+for(var i=0; i<4; i++){
+  for(var j=0; j<4; j++){
+    trees[temptreek].changeX(  8+i*12);
+    trees[temptreek].changeZ( -8-j*12);
+    temptreek++;
   }
 }
 for(var i=0; i<8; i++){
@@ -213,8 +301,6 @@ controls.zoomSpeed = 1.0;
 controls.staticMoving = true;
 controls.dynamicDampingFactor = 0.3;
 
-var treesway = 0.001;
-
 function animate() {
   requestAnimationFrame(animate);
 
@@ -224,14 +310,10 @@ function animate() {
   player.rotation.y += 0.05;
 
   projects.forEach(e => {
-    e.data.rotation.y += 0.005;
+    e.ball.rotation.x += 0.1;
+    //e.ball.rotation.y += 0.01;
+    e.ball.rotation.z += 0.1;
   });
-  trees.forEach(e => {
-    e.top.rotation.y += treesway;
-    treesway = - treesway;
-
-  });
-
 
   controls.update();
   renderer.render(scene, camera);
