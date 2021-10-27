@@ -20,12 +20,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(5);                                     // Camera positionZ
 camera.position.setY(3);                                      // Camera positionY
 renderer.render(scene, camera);
+
 const textureLoader = new THREE.TextureLoader();
 
 // SHAPES
 
 // Ground
-const ground = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, BORDER_LIMIT), new THREE.MeshBasicMaterial({color: 0x74b72e}));
+const ground = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, BORDER_LIMIT), new THREE.MeshBasicMaterial({map: textureLoader.load('./textures/ground.jpg')}));
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
@@ -41,7 +42,7 @@ planet.translateX(0);
 scene.add(planet)
 
 //character
-const player = new THREE.Mesh( new THREE.CylinderGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
+const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
 player.position.z += 3;
 player.position.y += 0.1;
 scene.add( player );
@@ -50,7 +51,7 @@ scene.add( player );
 
 class ProjectCylinder{
   constructor(sceneBG){
-    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2, 2, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
+    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 2, 2, 2, 100 ), new THREE.MeshBasicMaterial( {map: textureLoader.load('./textures/brick.jpg')} ) );
     sceneBG.add(this.data)
   }
   changeX(pos) {
