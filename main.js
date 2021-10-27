@@ -169,6 +169,15 @@ const projectData = [
     "title": "Project6",
     "details": ""
   },
+  {
+    "id": 7,
+    "posx": 0,
+    "posz": 13,
+    "rad": 2,
+    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/dp.jpg",
+    "title": "RISHAV MAZUMDAR",
+    "details": "<ul><li>Rishav Mazumdar currently resides in Dhanbad, Jharkhand and is pursuing his undergraduate in Electronics and Communication Engineering from Indian Institute of Information Technology, Ranchi.</li><br/><li>A passionate Programmer with strong interest towards writing beautiful code to solve a task efficiently.</li><br/><li>Always ready to grasp new skils and learn further to be better in Software and Web Development.</li></ul>"
+  },
   
 
 ]
@@ -190,12 +199,15 @@ const textureLoader = new THREE.TextureLoader();
 // SHAPES
 
 const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
+const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground2.jpg');
 const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
 const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tesseract.jpg');
-const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar1.jpg');
+const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar.jpg');
 const tree_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree1.jpg');
 const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree2.jpg');
 const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/mountain.png');
+const label1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label1.jpg');
+const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label2.jpg');
 
 tree_image2.wrapS = THREE.RepeatWrapping;
 tree_image2.wrapT = THREE.RepeatWrapping;
@@ -221,6 +233,27 @@ ground_image.repeat.set(32, 32);
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
+const ground1 = new THREE.Mesh( new THREE.PlaneGeometry(15, 25), new THREE.MeshBasicMaterial({map: ground_image1}));
+ground1.rotation.x = THREE.Math.degToRad(-90);
+ground1.position.y += 0.1;
+ground1.position.x -= 15;
+ground1.position.z -= 20;
+scene.add(ground1);
+const label1 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
+label1.translateX(-12);
+label1.translateZ(-5);
+scene.add(label1);
+
+const ground2 = new THREE.Mesh( new THREE.PlaneGeometry(5, 5), new THREE.MeshBasicMaterial({map: ground_image1}));
+ground2.rotation.x = THREE.Math.degToRad(-90);
+ground2.position.y += 0.1;
+ground2.position.x -= 0;
+ground2.position.z -= 10;
+scene.add(ground2);
+const label2 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label2_image}));
+label2.translateX(0);
+label2.translateZ(-5);
+scene.add(label2);
 
 // Planet1
 const planet = new THREE.Mesh( new THREE.SphereGeometry( 10, 10, 100 ), new THREE.MeshStandardMaterial( { color: 0xffff00 } ));
@@ -237,16 +270,26 @@ scene.add( player );
 
 // CONTENTS
 
-for(var i=0; i<6; i++){
+for(var i=0; i<projectData.length; i++){
   projects.push(new ProjectCylinder(scene));
 }
 var tempprojk = 0;
 for(var i=0; i<2; i++){
   for(var j=0; j<3; j++){
-    projects[tempprojk].changeX(-10 -10*i);
-    projects[tempprojk].changeZ(-10 - 10*j);
-    tempprojk++;
+    if(i<2 && j<3){
+      projects[tempprojk].changeX(-10 -10*i );
+      projects[tempprojk].changeZ(-10 - 10*j);
+      tempprojk++;
+    }
   }
+}
+  console.log(tempprojk, projects.length, projectData.length);
+for(var i=tempprojk; i<projectData.length; i++){
+  projects[tempprojk].changeX(projectData[tempprojk].posx);
+  projects[tempprojk].changeZ(-projectData[tempprojk].posz+2);
+  console.log(tempprojk, projects.length, projectData.length);
+  tempprojk++;
+  console.log(tempprojk);
 }
 
 var temptreek = 0;
@@ -255,23 +298,38 @@ for(var i=0; i<48; i++){
 }
 for(var i=0; i<4; i++){
   for(var j=0; j<4; j++){
-    trees[temptreek].changeX( 8+i*12);
-    trees[temptreek].changeZ( 8+j*12);
-    temptreek++;
+    if(i==0 || j==0 || i==3 || j==3){
+      trees[temptreek].changeX( 5+i*12);
+      trees[temptreek].changeZ( 5+j*12);
+      temptreek++;
+    }
   }
 }
 for(var i=0; i<4; i++){
   for(var j=0; j<4; j++){
-    trees[temptreek].changeX( -8-i*12);
-    trees[temptreek].changeZ(  8+j*12 );
-    temptreek++;
+    if(i==0 || j==0 || i==3 || j==3){
+      trees[temptreek].changeX(-5-i*12);
+      trees[temptreek].changeZ( 5+j*12);
+      temptreek++;
+    }
   }
 }
 for(var i=0; i<4; i++){
   for(var j=0; j<4; j++){
-    trees[temptreek].changeX(  8+i*12);
-    trees[temptreek].changeZ( -8-j*12);
-    temptreek++;
+    if(i==0 || j==0 || i==3 || j==3){
+      trees[temptreek].changeX( 5+i*12);
+      trees[temptreek].changeZ(-5-j*12);
+      temptreek++;
+    }
+  }
+}
+for(var i=0; i<4; i++){
+  for(var j=0; j<4; j++){
+    if(i==0 || j==0 || i==3 || j==3){
+      trees[temptreek].changeX(-5-i*12);
+      trees[temptreek].changeZ(-5-j*12);
+      temptreek++;
+    }
   }
 }
 for(var i=0; i<6; i++){
