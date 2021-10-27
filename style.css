@@ -24,6 +24,7 @@ canvas {
   right: 10px;
   display: none;
 }
+
 .pressSpace{
   position: fixed;
   display: none;;
@@ -39,4 +40,18 @@ canvas {
   height: 200px;
   width: auto;
   border: 1px solid black;
+}
+.tutorial{
+  border: 1px solid transparent;
+  background: url("textures/paper.jpg");
+  position: fixed;
+  height: 300px;
+  width: 600px;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  display: block;
+}
+.tutlist{
+  margin-left: 100px;
 }

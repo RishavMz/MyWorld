@@ -274,16 +274,35 @@ for(var i=0; i<4; i++){
     temptreek++;
   }
 }
-for(var i=0; i<8; i++){
+for(var i=0; i<6; i++){
   mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(i*8);
+  mountain[i].data.translateX(i*12);
   mountain[i].data.translateZ(-68);
 }
-for(var i=8; i<16; i++){
+for(var i=6; i<12; i++){
   mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(-(i-8)*8);
+  mountain[i].data.translateX(-(i-6)*12);
   mountain[i].data.translateZ(-68);
-
+}
+for(var i=12; i<18; i++){
+  mountain.push(new Mountain(scene));
+  mountain[i].data.translateX(-70);
+  mountain[i].data.translateZ((i-12)*12);
+}
+for(var i=18; i<24; i++){
+  mountain.push(new Mountain(scene));
+  mountain[i].data.translateX(-70);
+  mountain[i].data.translateZ(-(i-18)*12);
+}
+for(var i=24; i<30; i++){
+  mountain.push(new Mountain(scene));
+  mountain[i].data.translateX(70);
+  mountain[i].data.translateZ((i-24)*12);
+}
+for(var i=30; i<36; i++){
+  mountain.push(new Mountain(scene));
+  mountain[i].data.translateX(70);
+  mountain[i].data.translateZ(-(i-30)*12);
 }
 
 // Lights
@@ -342,6 +361,12 @@ function onDocumentKeyDown(event) {
         document.getElementById('bag').style.display = 'block'
       }else {
         document.getElementById('bag').style.display = 'none'
+      }
+    }  else if (keyCode == 84) {
+      if(document.getElementById('tutorial').style.display === 'none'){
+        document.getElementById('tutorial').style.display = 'block'
+      }else {
+        document.getElementById('tutorial').style.display = 'none'
       }
     } else if(keyCode == 32){
       console.log(scene.position)
