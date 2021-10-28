@@ -9,9 +9,8 @@ const BORDER_LIMIT = 128;
 const BORDER = 10;
 const movement = [];
 const object = [];
-const noobstacle = [];
 const hotspot = [];
-const OBJECTDENSITY = 20;
+const OBJECTDENSITY = 10;
 let PLAYER_POSX = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 
@@ -216,13 +215,7 @@ for(var i=0; i<BORDER_LIMIT; i++){
   }
   hotspot.push(temp);
 }       
-for(var i=0; i<BORDER_LIMIT; i++){
-  let temp = [];
-  for(var j=0; j<BORDER_LIMIT; j++){
-    temp.push(0);
-  }
-  noobstacle.push(temp);
-}                                    // Initialization ends
+                                 // Initialization ends
 
 for(let i=0; i<BORDER_LIMIT; i++){        // Limits for playground
   for(let j=0; j<BORDER; j++){
@@ -310,28 +303,44 @@ function randRange(min, max) {
 function addObstacle(){
   console.log("Adding obstacle")
   for(var i=0; i<OBJECTDENSITY; i++){
-    var obposz = randRange(-(BORDER_LIMIT/2-10), (BORDER_LIMIT)/2-10);
-    var obposx = randRange(-(BORDER_LIMIT/2-10), (BORDER_LIMIT)/2-10);
-    if(noobstacle[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] == 0){
+    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
       object[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
       movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
       obstacledata[objid].changeX(-obposx);
       obstacledata[objid].changeZ(3-obposz);
       objid++;
-    }
   }
   for(var i=0; i<OBJECTDENSITY; i++){
-    var obposz = randRange(-(BORDER_LIMIT-10)/2, (BORDER_LIMIT-10)/2);
-    var obposx = randRange(-(BORDER_LIMIT-10)/2, (BORDER_LIMIT-10)/2);
-    if(noobstacle[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] == 0){
-      object[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
-      movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
-      obstacledata.push(new Rock(scene));
-      obstacledata[objid].changeX(-obposx);
+    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+      object[obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 2;
+      movement[obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 1;
+      obstacledata.push(new Tree(scene));
+      obstacledata[objid].changeX(obposx);
       obstacledata[objid].changeZ(3-obposz);
       objid++;
-    }
+  }
+  for(var i=0; i<OBJECTDENSITY; i++){
+    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+      object[6-obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
+      movement[6-obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
+      obstacledata.push(new Tree(scene));
+      obstacledata[objid].changeX(-obposx);
+      obstacledata[objid].changeZ(-3+obposz);
+      objid++;
+  }
+  for(var i=0; i<OBJECTDENSITY; i++){
+    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+      object[6-obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 2;
+      movement[6-obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 1;
+      obstacledata.push(new Tree(scene));
+      obstacledata[objid].changeX(obposx);
+      obstacledata[objid].changeZ(-3+obposz);
+      objid++;
   }
 }
 
@@ -370,55 +379,6 @@ for(var i=0; i<BORDER_LIMIT; i++){
       hotspot[j-3][i+3] = hotspot[j][i];
       hotspot[j-3][i-3] = hotspot[j][i];
 
-      noobstacle[j][i]     = 1;
-      noobstacle[j][i+1]   = 1;
-      noobstacle[j][i-1]   = 1;
-      noobstacle[j+1][i]   = 1;
-      noobstacle[j-1][i]   = 1;
-      noobstacle[j+1][i+1] = 1;
-      noobstacle[j+1][i-1] = 1;
-      noobstacle[j-1][i+1] = 1;
-      noobstacle[j-1][i-1] = 1;
-      noobstacle[j][i+2]   = 1;
-      noobstacle[j][i-2]   = 1;
-      noobstacle[j+2][i]   = 1;
-      noobstacle[j-2][i]   = 1;
-      noobstacle[j+2][i+2] = 1;
-      noobstacle[j+2][i-2] = 1;
-      noobstacle[j-2][i+2] = 1;
-      noobstacle[j-2][i-2] = 1;
-      noobstacle[j][i+3]   = 1;
-      noobstacle[j][i-3]   = 1;
-      noobstacle[j+3][i]   = 1;
-      noobstacle[j-3][i]   = 1;
-      noobstacle[j+3][i+3] = 1;
-      noobstacle[j+3][i-3] = 1;
-      noobstacle[j-3][i+3] = 1;
-      noobstacle[j-3][i-3] = 1;
-      noobstacle[j][i+4]   = 1;
-      noobstacle[j][i-4]   = 1;
-      noobstacle[j+4][i]   = 1;
-      noobstacle[j-4][i]   = 1;
-      noobstacle[j+4][i+4] = 1;
-      noobstacle[j+4][i-4] = 1;
-      noobstacle[j-4][i+4] = 1;
-      noobstacle[j-4][i-4] = 1;
-      noobstacle[j][i+5]   = 1;
-      noobstacle[j][i-5]   = 1;
-      noobstacle[j+5][i]   = 1;
-      noobstacle[j-5][i]   = 1;
-      noobstacle[j+5][i+5] = 1;
-      noobstacle[j+5][i-5] = 1;
-      noobstacle[j-5][i+5] = 1;
-      noobstacle[j-5][i-5] = 1;
-      noobstacle[j][i+6]   = 1;
-      noobstacle[j][i-6]   = 1;
-      noobstacle[j+6][i]   = 1;
-      noobstacle[j-6][i]   = 1;
-      noobstacle[j+6][i+6] = 1;
-      noobstacle[j+6][i-6] = 1;
-      noobstacle[j-6][i+6] = 1;
-      noobstacle[j-6][i-6] = 1;
       hotspotno++;
     }
   }
