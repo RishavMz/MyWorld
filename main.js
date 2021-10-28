@@ -352,11 +352,15 @@ forest3.translateY(7.5);
 forest3.translateX(64);
 forest3.rotation.y = THREE.Math.degToRad(-90);
 scene.add(forest3);
-
+const forest4 = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, 15), new THREE.MeshBasicMaterial({map: forest_image}));
+forest4.translateY(7.5);
+forest4.translateZ(64);
+forest4.rotation.y = THREE.Math.degToRad(180);
+scene.add(forest4);
 
 //character
 const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-player.position.z += 3;
+player.position.z += 0;
 player.position.y += 0.1;
 scene.add( player );
 
@@ -385,7 +389,7 @@ function addObstacle(){
       movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
       obstacledata[objid].changeX(-obposx);
-      obstacledata[objid].changeZ(3-obposz);
+      obstacledata[objid].changeZ(-obposz);
       objid++;
   }
   for(var i=0; i<OBJECTDENSITY; i++){
@@ -395,7 +399,7 @@ function addObstacle(){
       movement[obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
       obstacledata[objid].changeX(obposx);
-      obstacledata[objid].changeZ(3-obposz);
+      obstacledata[objid].changeZ(-obposz);
       objid++;
   }
   for(var i=0; i<OBJECTDENSITY; i++){
@@ -405,7 +409,7 @@ function addObstacle(){
       movement[6-obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
       obstacledata[objid].changeX(-obposx);
-      obstacledata[objid].changeZ(-3+obposz);
+      obstacledata[objid].changeZ(-6+obposz);
       objid++;
   }
   for(var i=0; i<OBJECTDENSITY; i++){
@@ -415,7 +419,7 @@ function addObstacle(){
       movement[6-obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
       obstacledata[objid].changeX(obposx);
-      obstacledata[objid].changeZ(-3+obposz);
+      obstacledata[objid].changeZ(-6+obposz);
       objid++;
   }
 }
@@ -514,6 +518,13 @@ function animate() {
   for(var i=0; i<hots.length; i++){
     hots[projectid++].ball.rotation.y -= 0.01;
   }
+  //camera.position.x += 0.01;
+  //camera.translateX(0.1);
+  let dir = 1;
+  if(scene.position.y<-0.1){
+    scene.position.y+=0.1;
+    player.position.y-=0.1;
+  }
 
   controls.update();
   renderer.render(scene, camera);
@@ -554,7 +565,12 @@ function onDocumentKeyDown(event) {
         document.getElementById('tutorial').style.display = 'none'
       }
     } else if(keyCode == 32){
-      console.log(scene.position, PLAYER_POSZ, PLAYER_POSX)
+      scene.position.y -=  1;
+      player.position.y += 1;
+    }else if(keyCode == 39){
+      camera.translateX(-0.1);
+    }else if(keyCode == 37){
+      camera.translateX(0.1);
     }
 
     if(hotspot[PLAYER_POSZ][PLAYER_POSX]>-1){

@@ -48,7 +48,7 @@ canvas {
   border: 1px solid transparent;
   background: url("textures/paper.jpg");
   position: fixed;
-  height: 300px;
+  height: 400px;
   width: 600px;
   z-index: 100;
   top: 10px;
