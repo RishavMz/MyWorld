@@ -250,7 +250,7 @@ const textureLoader = new THREE.TextureLoader();
 
 const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
 const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground2.jpg');
-const rock_image = textureLoader.load('./textures/rock.jpg');
+const rock_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/rock.jpg');
 const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
 const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tesseract.jpg');
 const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar.jpg');
