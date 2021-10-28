@@ -11,6 +11,7 @@ const BORDER = 10;
 const movement = [];
 const object = [];
 const hotspot = [];
+const init_z = 50;
 const OBJECTDENSITY = 10;
 let PLAYER_POSX = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
@@ -19,7 +20,7 @@ let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right (
 class ProjectCylinder{
   constructor(sceneBG){
     this.data = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 1, 4, 100 ), new THREE.MeshBasicMaterial( {map: pillar_image} ) );
-    this.ball = new THREE.Mesh( new THREE.SphereGeometry(1, 50, 10), new THREE.MeshBasicMaterial( {map: radiate_ball} ) );
+    this.ball = new THREE.Mesh( new THREE.SphereGeometry(1, 100, 100, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: radiate_ball} ) );
     sceneBG.add(this.data);
     sceneBG.add(this.ball);
     this.ball.translateY(2);
@@ -29,19 +30,9 @@ class ProjectCylinder{
   changeZ(pos) {  this.data.position.z += pos;  this.ball.position.z += pos; }
 }
 
-class Rock{
-  constructor(sceneBG){
-    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 0.5, 1, 1, 20 ), new THREE.MeshBasicMaterial( {map: rock_image} ) );
-    sceneBG.add(this.data);
-  }
-  changeX(pos) {  this.data.position.x += pos;  }
-  changeY(pos) {  this.data.position.y += pos;  }
-  changeZ(pos) {  this.data.position.z += pos;  }
-}
-
 class Tree{
   constructor(sceneBG){
-    this.bark = new THREE.Mesh( new THREE.CylinderGeometry( 0.2, 0.4, 4, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
+    this.bark    = new THREE.Mesh( new THREE.CylinderGeometry( 0.2, 0.4, 4, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
     this.branch1 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
     this.branch2 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
     this.branch3 = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, 1, 100 ), new THREE.MeshBasicMaterial( {map: tree_image1} ) );
@@ -58,11 +49,11 @@ class Tree{
     this.branch2.rotation.z = 22.5;
     this.branch3.rotation.x = 22.5;
     this.branch4.rotation.x = -22.5;
-    this.top = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
-    this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
-    this.top2 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
-    this.top3 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
-    this.top4 = new THREE.Mesh( new THREE.SphereGeometry( 0.8, 10, 10), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top  = new THREE.Mesh( new THREE.SphereGeometry( 1, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 1, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top2 = new THREE.Mesh( new THREE.SphereGeometry( 1, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top3 = new THREE.Mesh( new THREE.SphereGeometry( 1, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
+    this.top4 = new THREE.Mesh( new THREE.SphereGeometry( 1, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: tree_image2} ) );
     this.top.position.y += 2.8;
     this.top1.position.x += 0.5;
     this.top2.position.x -= 0.5;
@@ -120,11 +111,18 @@ class Tree{
   }
 }
 
-class Mountain{
+class UFO{
   constructor(sceneBG){
-    this.data =  new THREE.Mesh( new THREE.ConeGeometry( 20, 16, 10 ), new THREE.MeshBasicMaterial( {map: mountain_image} ) );
-    sceneBG.add( this.data );
+    this.ball = new THREE.Mesh( new THREE.SphereGeometry( 0.5, 100, 100), new THREE.MeshBasicMaterial( {map: machine_image} ) );
+    this.wheel = new THREE.Mesh( new THREE.TorusGeometry( 0.7, 0.1, 10, 100, 100), new THREE.MeshBasicMaterial( {map: radiate_ball} ) );
+    this.wheel.rotation.x = THREE.Math.degToRad(-90);
+    sceneBG.add(this.ball);
+    sceneBG.add(this.wheel);
   }
+  changeX(pos){   this.ball.position.x += pos; this.wheel.position.x += pos; }
+  changeY(pos){   this.ball.position.y += pos; this.wheel.position.y += pos; }
+  changeZ(pos){   this.ball.position.z += pos; this.wheel.position.z += pos; }
+
 }
 
 const projectData = [
@@ -254,6 +252,7 @@ const label1_image = textureLoader.load('https://raw.githubusercontent.com/Risha
 const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label2.jpg');
 const label3_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label3.jpg');
 const forest_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/forest.jpg');
+const machine_image = textureLoader.load('./textures/machine.jpg');
 
 
 const c_image        =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/c.png       ");     
@@ -359,17 +358,16 @@ forest4.rotation.y = THREE.Math.degToRad(180);
 scene.add(forest4);
 
 //character
-const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
-player.position.z += 0;
-player.position.y += 0.1;
-scene.add( player );
+const player = new UFO(scene);
+player.changeX(0);
+player.changeY(0.5);
 
 // CONTENTS
 
 projectData.forEach((data)=> {
-  object[data.posz+64][data.posx+64] = 1;
-  movement[data.posz+64][data.posx+64] = 1;
-  hotspot[data.posz+64][data.posx+64] = data.id;
+  object[data.posz+61][data.posx+64] = 1;
+  movement[data.posz+61][data.posx+64] = 1;
+  hotspot[data.posz+61][data.posx+64] = data.id;
 });
 
 const obstacledata = [];
@@ -383,7 +381,7 @@ function randRange(min, max) {
 function addObstacle(){
   console.log("Adding obstacle")
   for(var i=0; i<OBJECTDENSITY; i++){
-    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposz = randRange((BORDER_LIMIT/2-50), (BORDER_LIMIT)/2-10);
     var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
       object[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
       movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
@@ -403,8 +401,8 @@ function addObstacle(){
       objid++;
   }
   for(var i=0; i<OBJECTDENSITY; i++){
-    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
-    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposz = randRange((BORDER_LIMIT/2-60), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-80), (BORDER_LIMIT)/2-10);
       object[6-obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
       movement[6-obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
@@ -413,8 +411,8 @@ function addObstacle(){
       objid++;
   }
   for(var i=0; i<OBJECTDENSITY; i++){
-    var obposz = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
-    var obposx = randRange((BORDER_LIMIT/2-30), (BORDER_LIMIT)/2-10);
+    var obposz = randRange((BORDER_LIMIT/2-60), (BORDER_LIMIT)/2-10);
+    var obposx = randRange((BORDER_LIMIT/2-80), (BORDER_LIMIT)/2-10);
       object[6-obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 2;
       movement[6-obposz+BORDER_LIMIT/2][-obposx+BORDER_LIMIT/2] = 1;
       obstacledata.push(new Tree(scene));
@@ -523,13 +521,20 @@ function animate() {
   let dir = 1;
   if(scene.position.y<-0.1){
     scene.position.y+=0.1;
-    player.position.y-=0.1;
+    player.changeY(-0.1);
   }
+
+  player.wheel.rotation.z += 0.05;
+  player.ball.rotation.x += 0.01;
+  player.ball.rotation.y += 0.01;
 
   controls.update();
   renderer.render(scene, camera);
 }
 animate();
+scene.position.z -= init_z;
+player.changeZ(init_z);
+PLAYER_POSZ-= init_z;
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
@@ -538,19 +543,19 @@ function onDocumentKeyDown(event) {
     //console.log(keyCode)
     if (keyCode == 87 && movement[PLAYER_POSZ+1][PLAYER_POSX]==0) {         
         scene.position.z += WALK_SPEED;
-        player.position.z -= WALK_SPEED;
+        player.changeZ(-WALK_SPEED);
         PLAYER_POSZ++;
     } else if (keyCode == 83 && movement[PLAYER_POSZ-1][PLAYER_POSX]==0) {
       scene.position.z -= WALK_SPEED;
-      player.position.z += WALK_SPEED;
+      player.changeZ(WALK_SPEED);
       PLAYER_POSZ--;
     } else if (keyCode == 65 && movement[PLAYER_POSZ][PLAYER_POSX+1]==0) {
       scene.position.x += WALK_SPEED;
-      player.position.x -= WALK_SPEED;
+      player.changeX(-WALK_SPEED);
       PLAYER_POSX++;
     } else if (keyCode == 68 && movement[PLAYER_POSZ][PLAYER_POSX-1]==0) {
       scene.position.x -= WALK_SPEED;
-      player.position.x += WALK_SPEED;
+      player.changeX(WALK_SPEED);
       PLAYER_POSX--;
     } else if (keyCode == 73) {
       if(document.getElementById('bag').style.display === 'none'){
@@ -566,7 +571,7 @@ function onDocumentKeyDown(event) {
       }
     } else if(keyCode == 32){
       scene.position.y -=  1;
-      player.position.y += 1;
+      player.changeY(1);
     }else if(keyCode == 39){
       camera.translateX(-0.1);
     }else if(keyCode == 37){
