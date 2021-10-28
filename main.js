@@ -11,6 +11,7 @@ const movement = [];
 const object = [];
 const noobstacle = [];
 const hotspot = [];
+const OBJECTDENSITY = 20;
 let PLAYER_POSX = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 
@@ -26,6 +27,16 @@ class ProjectCylinder{
   changeX(pos) {  this.data.position.x += pos;  this.ball.position.x += pos; }
   changeY(pos) {  this.data.position.y += pos;  this.ball.position.y += pos; }
   changeZ(pos) {  this.data.position.z += pos;  this.ball.position.z += pos; }
+}
+
+class Rock{
+  constructor(sceneBG){
+    this.data = new THREE.Mesh( new THREE.CylinderGeometry( 0.5, 1, 1, 20 ), new THREE.MeshBasicMaterial( {map: rock_image} ) );
+    sceneBG.add(this.data);
+  }
+  changeX(pos) {  this.data.position.x += pos;  }
+  changeY(pos) {  this.data.position.y += pos;  }
+  changeZ(pos) {  this.data.position.z += pos;  }
 }
 
 class Tree{
@@ -274,30 +285,6 @@ ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
 
-//const ground1 = new THREE.Mesh( new THREE.PlaneGeometry(15, 25), new THREE.MeshBasicMaterial({map: ground_image1}));
-//ground1.rotation.x = THREE.Math.degToRad(-90);
-//ground1.position.y += 0.1;
-//ground1.position.x -= 15;
-//ground1.position.z -= 20;
-//scene.add(ground1);
-//const label1 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
-
-//
-//const ground2 = new THREE.Mesh( new THREE.PlaneGeometry(5, 5), new THREE.MeshBasicMaterial({map: ground_image1}));
-//ground2.rotation.x = THREE.Math.degToRad(-90);
-//ground2.position.y += 0.1;
-//ground2.position.x -= 0;
-//ground2.position.z -= 10;
-//scene.add(ground2);
-
-
-// Planet1
-//const planet = new THREE.Mesh( new THREE.SphereGeometry( 10, 10, 100 ), new THREE.MeshStandardMaterial( { color: 0xffff00 } ));
-//planet.translateY(100);
-//planet.translateZ(-300);
-//planet.translateX(0);
-//scene.add(planet)
-
 //character
 const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
 player.position.z += 3;
@@ -312,12 +299,43 @@ projectData.forEach((data)=> {
   hotspot[data.posz+64][data.posx+64] = data.id;
 });
 
+const obstacledata = [];
+let objid = 0;
 
-
-
+function randRange(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); 
+}
+function addObstacle(){
+  console.log("Adding obstacle")
+  for(var i=0; i<OBJECTDENSITY; i++){
+    var obposz = randRange(-(BORDER_LIMIT/2-10), (BORDER_LIMIT)/2-10);
+    var obposx = randRange(-(BORDER_LIMIT/2-10), (BORDER_LIMIT)/2-10);
+    if(noobstacle[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] == 0){
+      object[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
+      movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
+      obstacledata.push(new Tree(scene));
+      obstacledata[objid].changeX(-obposx);
+      obstacledata[objid].changeZ(3-obposz);
+      objid++;
+    }
+  }
+  for(var i=0; i<OBJECTDENSITY; i++){
+    var obposz = randRange(-(BORDER_LIMIT-10)/2, (BORDER_LIMIT-10)/2);
+    var obposx = randRange(-(BORDER_LIMIT-10)/2, (BORDER_LIMIT-10)/2);
+    if(noobstacle[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] == 0){
+      object[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 2;
+      movement[obposz+BORDER_LIMIT/2][obposx+BORDER_LIMIT/2] = 1;
+      obstacledata.push(new Rock(scene));
+      obstacledata[objid].changeX(-obposx);
+      obstacledata[objid].changeZ(3-obposz);
+      objid++;
+    }
+  }
+}
 
 // SHOW Objects
-
 let hots = [];
 let hotspotno = 0;
 for(var i=0; i<BORDER_LIMIT; i++){
@@ -377,6 +395,30 @@ for(var i=0; i<BORDER_LIMIT; i++){
       noobstacle[j+3][i-3] = 1;
       noobstacle[j-3][i+3] = 1;
       noobstacle[j-3][i-3] = 1;
+      noobstacle[j][i+4]   = 1;
+      noobstacle[j][i-4]   = 1;
+      noobstacle[j+4][i]   = 1;
+      noobstacle[j-4][i]   = 1;
+      noobstacle[j+4][i+4] = 1;
+      noobstacle[j+4][i-4] = 1;
+      noobstacle[j-4][i+4] = 1;
+      noobstacle[j-4][i-4] = 1;
+      noobstacle[j][i+5]   = 1;
+      noobstacle[j][i-5]   = 1;
+      noobstacle[j+5][i]   = 1;
+      noobstacle[j-5][i]   = 1;
+      noobstacle[j+5][i+5] = 1;
+      noobstacle[j+5][i-5] = 1;
+      noobstacle[j-5][i+5] = 1;
+      noobstacle[j-5][i-5] = 1;
+      noobstacle[j][i+6]   = 1;
+      noobstacle[j][i-6]   = 1;
+      noobstacle[j+6][i]   = 1;
+      noobstacle[j-6][i]   = 1;
+      noobstacle[j+6][i+6] = 1;
+      noobstacle[j+6][i-6] = 1;
+      noobstacle[j-6][i+6] = 1;
+      noobstacle[j-6][i-6] = 1;
       hotspotno++;
     }
   }
@@ -400,100 +442,8 @@ house2.translateX(0);
 house2.translateZ(-18);
 scene.add(house2);
 
+addObstacle();
 
-//for(var i=0; i<projectData.length; i++){
-//  projects.push(new ProjectCylinder(scene));
-//}
-//var tempprojk = 0;
-//for(var i=0; i<2; i++){
-//  for(var j=0; j<3; j++){
-//    if(i<2 && j<3){
-//      projects[tempprojk].changeX(-10 -10*i );
-//      projects[tempprojk].changeZ(-10 - 10*j);
-//      tempprojk++;
-//    }
-//  }
-//}
-//  console.log(tempprojk, projects.length, projectData.length);
-//for(var i=tempprojk; i<projectData.length; i++){
-//  projects[tempprojk].changeX(projectData[tempprojk].posx);
-//  projects[tempprojk].changeZ(-projectData[tempprojk].posz+2);
-//  console.log(tempprojk, projects.length, projectData.length);
-//  tempprojk++;
-//  console.log(tempprojk);
-//}
-//
-//var temptreek = 0;
-//for(var i=0; i<48; i++){
-//    trees.push(new Tree(scene));
-//}
-//for(var i=0; i<4; i++){
-//  for(var j=0; j<4; j++){
-//    if(i==0 || j==0 || i==3 || j==3){
-//      trees[temptreek].changeX( 5+i*12);
-//      trees[temptreek].changeZ( 5+j*12);
-//      temptreek++;
-//    }
-//  }
-//}
-//for(var i=0; i<4; i++){
-//  for(var j=0; j<4; j++){
-//    if(i==0 || j==0 || i==3 || j==3){
-//      trees[temptreek].changeX(-5-i*12);
-//      trees[temptreek].changeZ( 5+j*12);
-//      temptreek++;
-//    }
-//  }
-//}
-//for(var i=0; i<4; i++){
-//  for(var j=0; j<4; j++){
-//    if(i==0 || j==0 || i==3 || j==3){
-//      trees[temptreek].changeX( 5+i*12);
-//      trees[temptreek].changeZ(-5-j*12);
-//      temptreek++;
-//    }
-//  }
-//}
-//for(var i=0; i<4; i++){
-//  for(var j=0; j<4; j++){
-//    if(i==0 || j==0 || i==3 || j==3){
-//      trees[temptreek].changeX(-5-i*12);
-//      trees[temptreek].changeZ(-5-j*12);
-//      temptreek++;
-//    }
-//  }
-//}
-//for(var i=0; i<6; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(i*12);
-//  mountain[i].data.translateZ(-68);
-//}
-//for(var i=6; i<12; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(-(i-6)*12);
-//  mountain[i].data.translateZ(-68);
-//}
-//for(var i=12; i<18; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(-70);
-//  mountain[i].data.translateZ((i-12)*12);
-//}
-//for(var i=18; i<24; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(-70);
-//  mountain[i].data.translateZ(-(i-18)*12);
-//}
-//for(var i=24; i<30; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(70);
-//  mountain[i].data.translateZ((i-24)*12);
-//}
-//for(var i=30; i<36; i++){
-//  mountain.push(new Mountain(scene));
-//  mountain[i].data.translateX(70);
-//  mountain[i].data.translateZ(-(i-30)*12);
-//}
-//
 //// Lights
 //const pointLight = new THREE.PointLight(0xffffff);
 //pointLight.position.set(0, 50, 0);
@@ -511,16 +461,6 @@ controls.dynamicDampingFactor = 0.3;
 
 function animate() {
   requestAnimationFrame(animate);
-
-  //planet.rotation.x += 0.01;
-  //planet.rotation.y += 0.005;
-  //planet.rotation.z += 0.01;
-  //player.rotation.y += 0.05;
-  //projects.forEach(e => {
-  //  e.ball.rotation.x += 0.1;
-  //  //e.ball.rotation.y += 0.01;
-  //  e.ball.rotation.z += 0.1;
-  //});
 
   controls.update();
   renderer.render(scene, camera);
@@ -570,14 +510,4 @@ function onDocumentKeyDown(event) {
       document.getElementById('bagtext').innerHTML = projectData[hotspot[PLAYER_POSZ][PLAYER_POSX]].details;
       document.getElementById('bagimage').innerHTML = `<img src="${projectData[hotspot[PLAYER_POSZ][PLAYER_POSX]].image}" class = "bagimage"/>`;
     }
-    // Press Space
-  //projectData.forEach(e => {
-  //  var dist = Math.sqrt(Math.pow(scene.position.x - e.posx,2)+Math.pow(scene.position.z - e.posz, 2));
-  //  if(dist <= e.rad){
-  //    document.getElementById('pressSpace').style.display = 'block';
-  //    document.getElementById('bagtitle').innerHTML = e.title;
-  //    document.getElementById('bagtext').innerHTML = e.details;
-  //    document.getElementById('bagimage').innerHTML = `<img src="${e.image}" class = "bagimage"/>`;
-  //  }
-  //});
 };
