@@ -11,7 +11,7 @@ const BORDER = 10;
 const movement = [];
 const object = [];
 const hotspot = [];
-const init_z = 50;
+const init_z = 45;
 const OBJECTDENSITY = 10;
 let PLAYER_POSX = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
@@ -176,7 +176,7 @@ const projectData = [
     "posx": 30,
     "posz": 40,
     "rad": 2,
-    "image": "",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/3dworld.png",
     "title": "3D Interactive world",
     "details": "<ul><li>A 3D simulated world designed using javascript library three.js</li><li>Contains my personal portfolio in a unique presentation</li><li>Used multiple grids to handle motions, objects etc.</li></ul>"
   },
@@ -240,8 +240,6 @@ const textureLoader = new THREE.TextureLoader();
 // Images Loaded
 
 const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/ground1.jpg');
-const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/ground2.jpg');
-const rock_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/rock.jpg');
 const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/brick.jpg');
 const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/tesseract.jpg');
 const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/pillar.jpg');
@@ -252,7 +250,7 @@ const label1_image = textureLoader.load('https://raw.githubusercontent.com/Risha
 const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label2.jpg');
 const label3_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label3.jpg');
 const forest_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/forest.jpg');
-const machine_image = textureLoader.load('./textures/machine.jpg');
+const machine_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/machine.jpg');
 
 
 const c_image        =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/c.png       ");     
