@@ -253,6 +253,7 @@ const mountain_image = textureLoader.load('https://raw.githubusercontent.com/Ris
 const label1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label1.jpg');
 const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label2.jpg');
 const label3_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label3.jpg');
+const forest_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/forest.jpg');
 
 
 const c_image        =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/c.png       ");     
@@ -333,6 +334,24 @@ ground_image.wrapT = THREE.RepeatWrapping;
 ground_image.repeat.set(32, 32);
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
+
+const forest1 = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, 15), new THREE.MeshBasicMaterial({map: forest_image}));
+forest_image.wrapS = THREE.RepeatWrapping;
+forest_image.wrapT = THREE.RepeatWrapping;
+forest_image.repeat.set(8, 1);
+forest1.translateY(7.5);
+forest1.translateZ(-64);
+scene.add(forest1);
+const forest2 = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, 15), new THREE.MeshBasicMaterial({map: forest_image}));
+forest2.translateY(7.5);
+forest2.translateX(-64);
+forest2.rotation.y = THREE.Math.degToRad(90);
+scene.add(forest2);
+const forest3 = new THREE.Mesh( new THREE.PlaneGeometry(BORDER_LIMIT, 15), new THREE.MeshBasicMaterial({map: forest_image}));
+forest3.translateY(7.5);
+forest3.translateX(64);
+forest3.rotation.y = THREE.Math.degToRad(-90);
+scene.add(forest3);
 
 
 //character
