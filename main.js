@@ -133,7 +133,7 @@ const projectData = [
     "posx": 20,
     "posz": 20,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/discordbot.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/discordbot.png",
     "title": "Discord bot for Competitive Programming",
     "details": "<ul><li>A discord bot developed using discord.py module to notify members about upcoming contests.</li><li> Provides custom rank list based on peers whose handles are added to database.</li><li> Deployed the application using Heroku.</li></ul>"
   },
@@ -142,7 +142,7 @@ const projectData = [
     "posx": 20,
     "posz": 30,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/image2pdf.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/image2pdf.png",
     "title": "Image to PDF Converter",
     "details": "<ul><li>GUI based desktop application which allows user to select some images and add them to a PDF file.</li><li>Used Python for making API calls and backend tasks, while used C++ to develop an interactive GUI</li><li> Used python-docx and docx2pdf modules which use the Microsoft Office API.</li></ul>"
   },
@@ -151,7 +151,7 @@ const projectData = [
     "posx": 20,
     "posz": 40,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/ieesb.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/ieesb.png",
     "title": "IEEE SB Website",
     "details": "<ul><li>Worked in a team to develop IEEE student branch website for our institute using MERN stack.</li><li>Dedicated admin section provided to dynamically modify all the visible contents of the website.</li></ul>"
   },
@@ -160,7 +160,7 @@ const projectData = [
     "posx": 30,
     "posz": 20,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/opencodecompete.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/opencodecompete.png",
     "title": "OpenCodeCompete",
     "details": "<ul><li>Web Application developed using PERN stack where users solve problems by using some code.</li><li> Integrated CI/CD for this application using Vercel.</li></ul>"
   },
@@ -169,7 +169,7 @@ const projectData = [
     "posx": 30,
     "posz": 30,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/hoodieshopping.png",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/hoodieshopping.png",
     "title": "Hoodie Whopping Website",
     "details": "<ul><li>A Web based application which allows customers to select a product of their choice from a list of items.</li><li>Developen this application using PHP as backend and MySQL database</li></ul> "
   },
@@ -187,7 +187,7 @@ const projectData = [
     "posx": 0,
     "posz": 20,
     "rad": 2,
-    "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/dp.jpg",
+    "image": "https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/dp.jpg",
     "title": "RISHAV MAZUMDAR",
     "details": "<ul><li>Rishav Mazumdar currently resides in Dhanbad, Jharkhand and is pursuing his undergraduate in Electronics and Communication Engineering from Indian Institute of Information Technology, Ranchi.</li><br/><li>A passionate Programmer with strong interest towards writing beautiful code to solve a task efficiently.</li><br/><li>Always ready to grasp new skils and learn further to be better in Software and Web Development.</li></ul>"
   }, 
@@ -241,40 +241,40 @@ const textureLoader = new THREE.TextureLoader();
 
 // Images Loaded
 
-const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
-const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground2.jpg');
-const rock_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/rock.jpg');
-const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
-const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tesseract.jpg');
-const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar.jpg');
-const tree_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree1.jpg');
-const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tree2.jpg');
-const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/mountain.png');
-const label1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label1.jpg');
-const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label2.jpg');
-const label3_image = textureLoader.load('./textures/label3.jpg');
+const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/ground1.jpg');
+const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/ground2.jpg');
+const rock_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/rock.jpg');
+const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/brick.jpg');
+const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/tesseract.jpg');
+const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/pillar.jpg');
+const tree_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/tree1.jpg');
+const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/tree2.jpg');
+const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/mountain.png');
+const label1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label1.jpg');
+const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label2.jpg');
+const label3_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/label3.jpg');
 
 
-const c_image        =  textureLoader.load("./images/toolbox/c.png       ");     
-const cpp_image      =  textureLoader.load("./images/toolbox/cpp.png      ");    
-const css_image      =  textureLoader.load("./images/toolbox/css.png     ");     
-const docker_image   =  textureLoader.load("./images/toolbox/docker.png  ");  
-const express_image  =  textureLoader.load("./images/toolbox/express.png "); 
-const git_image      =  textureLoader.load("./images/toolbox/git.png     ");     
-const github_image   =  textureLoader.load("./images/toolbox/github.png  ");
-const html_image     =  textureLoader.load("./images/toolbox/html.png    ");    
-const java_image     =  textureLoader.load("./images/toolbox/java.png    ");    
-const jquery_image   =  textureLoader.load("./images/toolbox/jquery.jpg  ");  
-const js_image       =  textureLoader.load("./images/toolbox/js.jpg      ");      
-const linux_image    =  textureLoader.load("./images/toolbox/linux.png   ");   
-const mongo_image    =  textureLoader.load("./images/toolbox/mongo.png   ");   
-const mysql1_image   =  textureLoader.load("./images/toolbox/mysql1.png  ");  
-const nodejs_image   =  textureLoader.load("./images/toolbox/nodejs.png  ");  
-const php_image      =  textureLoader.load("./images/toolbox/php.png     ");    
-const postgres_image =  textureLoader.load("./images/toolbox/postgres.png");
-const python_image   =  textureLoader.load("./images/toolbox/python.png  ");  
-const react_image    =  textureLoader.load("./images/toolbox/react.png   ");   
-const redis_image    =  textureLoader.load("./images/toolbox/redis.png   ");   
+const c_image        =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/c.png       ");     
+const cpp_image      =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/cpp.png      ");    
+const css_image      =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/css.png     ");     
+const docker_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/docker.png  ");  
+const express_image  =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/express.png "); 
+const git_image      =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/git.png     ");     
+const github_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/github.png  ");
+const html_image     =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/html.png    ");    
+const java_image     =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/java.png    ");    
+const jquery_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/jquery.jpg  ");  
+const js_image       =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/js.jpg      ");      
+const linux_image    =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/linux.png   ");   
+const mongo_image    =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/mongo.png   ");   
+const mysql1_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/mysql1.png  ");  
+const nodejs_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/nodejs.png  ");  
+const php_image      =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/php.png     ");    
+const postgres_image =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/postgres.png");
+const python_image   =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/python.png  ");  
+const react_image    =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/react.png   ");   
+const redis_image    =  textureLoader.load("https://raw.githubusercontent.com/RishavMz/MyWorld/main/images/toolbox/redis.png   ");   
 
 
 const toolbox = [
@@ -490,6 +490,10 @@ function animate() {
   toolid = 0;
   for(var i=0; i<tools.length; i++){
     tools[toolid++].rotation.y += 0.01;
+  }
+  var projectid = 0;
+  for(var i=0; i<hots.length; i++){
+    hots[projectid++].ball.rotation.y -= 0.01;
   }
 
   controls.update();
