@@ -420,6 +420,57 @@ function addObstacle(){
   }
 }
 
+const planet1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet1.jpg');
+const planet2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet2.jpg');
+const planet3_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet3.jpg');
+const planet4_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet4.jpg');
+const planet5_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet5.jpg');
+const planet6_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet6.jpg');
+const planet7_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/MyWorld/main/textures/planet7.jpg');
+
+const planet1 = new THREE.Mesh( new THREE.SphereGeometry( 4, 100, 100), new THREE.MeshBasicMaterial( {map: planet1_image} ) );
+const planet2 = new THREE.Mesh( new THREE.SphereGeometry( 3, 100, 100), new THREE.MeshBasicMaterial( {map: planet2_image} ) );
+const planet3 = new THREE.Mesh( new THREE.SphereGeometry( 3, 100, 100), new THREE.MeshBasicMaterial( {map: planet3_image} ) );
+const planet4 = new THREE.Mesh( new THREE.SphereGeometry( 6, 100, 100), new THREE.MeshBasicMaterial( {map: planet4_image} ) );
+const planet5 = new THREE.Mesh( new THREE.SphereGeometry( 5, 100, 100), new THREE.MeshBasicMaterial( {map: planet5_image} ) );
+const planet6 = new THREE.Mesh( new THREE.SphereGeometry( 2, 100, 100), new THREE.MeshBasicMaterial( {map: planet6_image} ) );
+const planet7 = new THREE.Mesh( new THREE.SphereGeometry( 0.5, 100, 100), new THREE.MeshBasicMaterial( {map: planet7_image} ) );
+
+planet5.position.x -= 50;
+planet4.position.x -= 35;
+planet2.position.x += 40;
+planet6.position.x += 40;
+planet3.position.x += 20;
+planet1.position.x += 5;
+planet7.position.x += 0;
+
+planet1.position.y += 30;
+planet2.position.y += 30;
+planet3.position.y += 30;
+planet4.position.y += 30;
+planet5.position.y += 30;
+planet6.position.y += 30;
+planet7.position.y += 30;
+
+planet5.position.z -= 50;
+planet2.position.z += 15;
+planet3.position.z -= 20;
+planet6.position.z += 40;
+planet4.position.z += 20;
+planet1.position.z += 5;
+planet7.position.z += 20;
+
+
+
+scene.add(planet1);
+scene.add(planet2);
+scene.add(planet3);
+scene.add(planet4);
+scene.add(planet5);
+scene.add(planet6);
+scene.add(planet7);
+
+
 // SHOW Objects
 let hots = [];
 let hotspotno = 0;
@@ -525,6 +576,30 @@ function animate() {
   player.wheel.rotation.z += 0.05;
   player.ball.rotation.x += 0.01;
   player.ball.rotation.y += 0.01;
+
+  planet1.rotation.y += 0.01;
+  planet2.rotation.y += 0.01;
+  planet3.rotation.y += 0.01;
+  planet4.rotation.y += 0.01;
+  planet5.rotation.y += 0.01;
+  planet6.rotation.y += 0.01;
+  planet7.rotation.y += 0.01;
+  planet1.rotation.x += 0.01;
+  planet2.rotation.x += 0.01;
+  planet3.rotation.x += 0.01;
+  planet4.rotation.x += 0.01;
+  planet5.rotation.x += 0.01;
+  planet6.rotation.x += 0.01;
+  planet7.rotation.x += 0.01;
+  planet1.rotation.z += 0.01;
+  planet2.rotation.z += 0.01;
+  planet3.rotation.z += 0.01;
+  planet4.rotation.z += 0.01;
+  planet5.rotation.z += 0.01;
+  planet6.rotation.z += 0.01;
+  planet7.rotation.z += 0.01;
+
+
 
   controls.update();
   renderer.render(scene, camera);
