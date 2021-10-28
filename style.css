@@ -53,7 +53,7 @@ canvas {
   z-index: 100;
   top: 10px;
   left: 10px;
-  display: block;
+  display: none;
 }
 .tutlist{
   margin-left: 100px;

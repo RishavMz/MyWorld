@@ -7,12 +7,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 const WALK_SPEED = 1;
 const BORDER_LIMIT = 128;
 const BORDER = 10;
-const trees = [];
-const projects = [];
-const mountain = [];
+const movement = [];
+const object = [];
+const noobstacle = [];
+const hotspot = [];
+let PLAYER_POSX = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
+let PLAYER_POSZ = BORDER_LIMIT/2;         // POSX, POSZ origin at bottom right ( BORDER_LIMIT, BORDER_LIMIT )
 
 // Objects
-
 class ProjectCylinder{
   constructor(sceneBG){
     this.data = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 1, 4, 100 ), new THREE.MeshBasicMaterial( {map: pillar_image} ) );
@@ -116,72 +118,109 @@ class Mountain{
 
 const projectData = [
   {
-    "id": 1,
-    "posx": 10,
-    "posz": 13,
+    "id": 0,
+    "posx": 20,
+    "posz": 20,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/discordbot.png",
     "title": "Discord bot for Competitive Programming",
     "details": "<ul><li>A discord bot developed using discord.py module to notify members about upcoming contests.</li><li> Provides custom rank list based on peers whose handles are added to database.</li><li> Deployed the application using Heroku.</li></ul>"
   },
   {
-    "id": 2,
+    "id": 1,
     "posx": 20,
-    "posz": 13,
+    "posz": 30,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/image2pdf.png",
     "title": "Image to PDF Converter",
     "details": "<ul><li>GUI based desktop application which allows user to select some images and add them to a PDF file.</li><li>Used Python for making API calls and backend tasks, while used C++ to develop an interactive GUI</li><li> Used python-docx and docx2pdf modules which use the Microsoft Office API.</li></ul>"
   },
   {
-    "id": 3,
-    "posx": 10,
-    "posz": 23,
+    "id": 2,
+    "posx": 20,
+    "posz": 40,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/ieesb.png",
     "title": "IEEE SB Website",
     "details": "<ul><li>Worked in a team to develop IEEE student branch website for our institute using MERN stack.</li><li>Dedicated admin section provided to dynamically modify all the visible contents of the website.</li></ul>"
   },
   {
-    "id": 4,
-    "posx": 20,
-    "posz": 23,
+    "id": 3,
+    "posx": 30,
+    "posz": 20,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/opencodecompete.png",
     "title": "OpenCodeCompete",
     "details": "<ul><li>Web Application developed using PERN stack where users solve problems by using some code.</li><li> Integrated CI/CD for this application using Vercel.</li></ul>"
   },
   {
-    "id": 5,
-    "posx": 10,
-    "posz": 33,
+    "id": 4,
+    "posx": 30,
+    "posz": 30,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/hoodieshopping.png",
     "title": "Hoodie Whopping Website",
     "details": "<ul><li>A Web based application which allows customers to select a product of their choice from a list of items.</li><li>Developen this application using PHP as backend and MySQL database</li></ul> "
   },
   {
-    "id": 6,
-    "posx": 20,
-    "posz": 33,
+    "id": 5,
+    "posx": 30,
+    "posz": 40,
     "rad": 2,
     "image": "",
-    "title": "Project6",
-    "details": ""
+    "title": "3D Interactive world",
+    "details": "<ul><li>A 3D simulated world designed using javascript library three.js</li><li>Contains my personal portfolio in a unique presentation</li><li>Used multiple grids to handle motions, objects etc.</li></ul>"
   },
   {
-    "id": 7,
+    "id": 6,
     "posx": 0,
-    "posz": 13,
+    "posz": 20,
     "rad": 2,
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/dp.jpg",
     "title": "RISHAV MAZUMDAR",
     "details": "<ul><li>Rishav Mazumdar currently resides in Dhanbad, Jharkhand and is pursuing his undergraduate in Electronics and Communication Engineering from Indian Institute of Information Technology, Ranchi.</li><br/><li>A passionate Programmer with strong interest towards writing beautiful code to solve a task efficiently.</li><br/><li>Always ready to grasp new skils and learn further to be better in Software and Web Development.</li></ul>"
   },
   
-
 ]
 // SETUP
+
+for(var i=0; i<BORDER_LIMIT; i++){      // Initialization begins
+  let temp = [];
+  for(var j=0; j<BORDER_LIMIT; j++){
+    temp.push(0);
+  }
+  movement.push(temp);
+}
+for(var i=0; i<BORDER_LIMIT; i++){
+  let temp = [];
+  for(var j=0; j<BORDER_LIMIT; j++){
+    temp.push(0);
+  }
+  object.push(temp);
+}   
+for(var i=0; i<BORDER_LIMIT; i++){
+  let temp = [];
+  for(var j=0; j<BORDER_LIMIT; j++){
+    temp.push(-1);
+  }
+  hotspot.push(temp);
+}       
+for(var i=0; i<BORDER_LIMIT; i++){
+  let temp = [];
+  for(var j=0; j<BORDER_LIMIT; j++){
+    temp.push(0);
+  }
+  noobstacle.push(temp);
+}                                    // Initialization ends
+
+for(let i=0; i<BORDER_LIMIT; i++){        // Limits for playground
+  for(let j=0; j<BORDER; j++){
+    movement[i][j]=1;
+    movement[i][BORDER_LIMIT-1-j]=1;
+    movement[j][i]=1;
+    movement[BORDER_LIMIT-1-j][i]=1;
+  }
+}
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -196,10 +235,11 @@ renderer.render(scene, camera);
 
 const textureLoader = new THREE.TextureLoader();
 
-// SHAPES
+// Images Loaded
 
 const ground_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground1.jpg');
 const ground_image1 = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/ground2.jpg');
+const rock_image = textureLoader.load('./textures/rock.jpg');
 const brick_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/brick.jpg');
 const radiate_ball = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/tesseract.jpg');
 const pillar_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/pillar.jpg');
@@ -233,34 +273,30 @@ ground_image.repeat.set(32, 32);
 ground.rotation.x = THREE.Math.degToRad(-90);
 scene.add(ground);
 
-const ground1 = new THREE.Mesh( new THREE.PlaneGeometry(15, 25), new THREE.MeshBasicMaterial({map: ground_image1}));
-ground1.rotation.x = THREE.Math.degToRad(-90);
-ground1.position.y += 0.1;
-ground1.position.x -= 15;
-ground1.position.z -= 20;
-scene.add(ground1);
-const label1 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
-label1.translateX(-12);
-label1.translateZ(-5);
-scene.add(label1);
 
-const ground2 = new THREE.Mesh( new THREE.PlaneGeometry(5, 5), new THREE.MeshBasicMaterial({map: ground_image1}));
-ground2.rotation.x = THREE.Math.degToRad(-90);
-ground2.position.y += 0.1;
-ground2.position.x -= 0;
-ground2.position.z -= 10;
-scene.add(ground2);
-const label2 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label2_image}));
-label2.translateX(0);
-label2.translateZ(-5);
-scene.add(label2);
+//const ground1 = new THREE.Mesh( new THREE.PlaneGeometry(15, 25), new THREE.MeshBasicMaterial({map: ground_image1}));
+//ground1.rotation.x = THREE.Math.degToRad(-90);
+//ground1.position.y += 0.1;
+//ground1.position.x -= 15;
+//ground1.position.z -= 20;
+//scene.add(ground1);
+//const label1 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
+
+//
+//const ground2 = new THREE.Mesh( new THREE.PlaneGeometry(5, 5), new THREE.MeshBasicMaterial({map: ground_image1}));
+//ground2.rotation.x = THREE.Math.degToRad(-90);
+//ground2.position.y += 0.1;
+//ground2.position.x -= 0;
+//ground2.position.z -= 10;
+//scene.add(ground2);
+
 
 // Planet1
-const planet = new THREE.Mesh( new THREE.SphereGeometry( 10, 10, 100 ), new THREE.MeshStandardMaterial( { color: 0xffff00 } ));
-planet.translateY(100);
-planet.translateZ(-300);
-planet.translateX(0);
-scene.add(planet)
+//const planet = new THREE.Mesh( new THREE.SphereGeometry( 10, 10, 100 ), new THREE.MeshStandardMaterial( { color: 0xffff00 } ));
+//planet.translateY(100);
+//planet.translateZ(-300);
+//planet.translateX(0);
+//scene.add(planet)
 
 //character
 const player = new THREE.Mesh( new THREE.SphereGeometry( 0.3, 0.3, 0.3, 100 ), new THREE.MeshBasicMaterial( {color: 0xffffff, wireframe: true} ) );
@@ -270,104 +306,199 @@ scene.add( player );
 
 // CONTENTS
 
-for(var i=0; i<projectData.length; i++){
-  projects.push(new ProjectCylinder(scene));
-}
-var tempprojk = 0;
-for(var i=0; i<2; i++){
-  for(var j=0; j<3; j++){
-    if(i<2 && j<3){
-      projects[tempprojk].changeX(-10 -10*i );
-      projects[tempprojk].changeZ(-10 - 10*j);
-      tempprojk++;
+projectData.forEach((data)=> {
+  object[data.posz+64][data.posx+64] = 1;
+  movement[data.posz+64][data.posx+64] = 1;
+  hotspot[data.posz+64][data.posx+64] = data.id;
+});
+
+
+
+
+
+// SHOW Objects
+
+let hots = [];
+let hotspotno = 0;
+for(var i=0; i<BORDER_LIMIT; i++){
+  for(var j=0; j<BORDER_LIMIT; j++){
+    if(object[j][i]==1){
+      hots.push(new ProjectCylinder(scene));
+      hots[hotspotno].changeX(-projectData[hotspot[j][i]].posx);
+      hots[hotspotno].changeZ(3-projectData[hotspot[j][i]].posz);
+      hotspot[j][i]     = hotspot[j][i];
+      hotspot[j][i+1]   = hotspot[j][i];
+      hotspot[j][i-1]   = hotspot[j][i];
+      hotspot[j+1][i]   = hotspot[j][i];
+      hotspot[j-1][i]   = hotspot[j][i];
+      hotspot[j+1][i+1] = hotspot[j][i];
+      hotspot[j+1][i-1] = hotspot[j][i];
+      hotspot[j-1][i+1] = hotspot[j][i];
+      hotspot[j-1][i-1] = hotspot[j][i];
+      hotspot[j][i+2]   = hotspot[j][i];
+      hotspot[j][i-2]   = hotspot[j][i];
+      hotspot[j+2][i]   = hotspot[j][i];
+      hotspot[j-2][i]   = hotspot[j][i];
+      hotspot[j+2][i+2] = hotspot[j][i];
+      hotspot[j+2][i-2] = hotspot[j][i];
+      hotspot[j-2][i+2] = hotspot[j][i];
+      hotspot[j-2][i-2] = hotspot[j][i];
+      hotspot[j][i+3]   = hotspot[j][i];
+      hotspot[j][i-3]   = hotspot[j][i];
+      hotspot[j+3][i]   = hotspot[j][i];
+      hotspot[j-3][i]   = hotspot[j][i];
+      hotspot[j+3][i+3] = hotspot[j][i];
+      hotspot[j+3][i-3] = hotspot[j][i];
+      hotspot[j-3][i+3] = hotspot[j][i];
+      hotspot[j-3][i-3] = hotspot[j][i];
+
+      noobstacle[j][i]     = 1;
+      noobstacle[j][i+1]   = 1;
+      noobstacle[j][i-1]   = 1;
+      noobstacle[j+1][i]   = 1;
+      noobstacle[j-1][i]   = 1;
+      noobstacle[j+1][i+1] = 1;
+      noobstacle[j+1][i-1] = 1;
+      noobstacle[j-1][i+1] = 1;
+      noobstacle[j-1][i-1] = 1;
+      noobstacle[j][i+2]   = 1;
+      noobstacle[j][i-2]   = 1;
+      noobstacle[j+2][i]   = 1;
+      noobstacle[j-2][i]   = 1;
+      noobstacle[j+2][i+2] = 1;
+      noobstacle[j+2][i-2] = 1;
+      noobstacle[j-2][i+2] = 1;
+      noobstacle[j-2][i-2] = 1;
+      noobstacle[j][i+3]   = 1;
+      noobstacle[j][i-3]   = 1;
+      noobstacle[j+3][i]   = 1;
+      noobstacle[j-3][i]   = 1;
+      noobstacle[j+3][i+3] = 1;
+      noobstacle[j+3][i-3] = 1;
+      noobstacle[j-3][i+3] = 1;
+      noobstacle[j-3][i-3] = 1;
+      hotspotno++;
     }
   }
-}
-  console.log(tempprojk, projects.length, projectData.length);
-for(var i=tempprojk; i<projectData.length; i++){
-  projects[tempprojk].changeX(projectData[tempprojk].posx);
-  projects[tempprojk].changeZ(-projectData[tempprojk].posz+2);
-  console.log(tempprojk, projects.length, projectData.length);
-  tempprojk++;
-  console.log(tempprojk);
 }
 
-var temptreek = 0;
-for(var i=0; i<48; i++){
-    trees.push(new Tree(scene));
-}
-for(var i=0; i<4; i++){
-  for(var j=0; j<4; j++){
-    if(i==0 || j==0 || i==3 || j==3){
-      trees[temptreek].changeX( 5+i*12);
-      trees[temptreek].changeZ( 5+j*12);
-      temptreek++;
-    }
-  }
-}
-for(var i=0; i<4; i++){
-  for(var j=0; j<4; j++){
-    if(i==0 || j==0 || i==3 || j==3){
-      trees[temptreek].changeX(-5-i*12);
-      trees[temptreek].changeZ( 5+j*12);
-      temptreek++;
-    }
-  }
-}
-for(var i=0; i<4; i++){
-  for(var j=0; j<4; j++){
-    if(i==0 || j==0 || i==3 || j==3){
-      trees[temptreek].changeX( 5+i*12);
-      trees[temptreek].changeZ(-5-j*12);
-      temptreek++;
-    }
-  }
-}
-for(var i=0; i<4; i++){
-  for(var j=0; j<4; j++){
-    if(i==0 || j==0 || i==3 || j==3){
-      trees[temptreek].changeX(-5-i*12);
-      trees[temptreek].changeZ(-5-j*12);
-      temptreek++;
-    }
-  }
-}
-for(var i=0; i<6; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(i*12);
-  mountain[i].data.translateZ(-68);
-}
-for(var i=6; i<12; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(-(i-6)*12);
-  mountain[i].data.translateZ(-68);
-}
-for(var i=12; i<18; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(-70);
-  mountain[i].data.translateZ((i-12)*12);
-}
-for(var i=18; i<24; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(-70);
-  mountain[i].data.translateZ(-(i-18)*12);
-}
-for(var i=24; i<30; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(70);
-  mountain[i].data.translateZ((i-24)*12);
-}
-for(var i=30; i<36; i++){
-  mountain.push(new Mountain(scene));
-  mountain[i].data.translateX(70);
-  mountain[i].data.translateZ(-(i-30)*12);
-}
+const label1 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
+label1.translateX(-25);
+label1.translateZ(-12);
+scene.add(label1);
+const label2 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label2_image}));
+label2.translateX(0);
+label2.translateZ(-12);
+scene.add(label2);
 
-// Lights
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(0, 50, 0);
+const house1 = new THREE.Mesh( new THREE.BoxGeometry(15, 0.1, 25, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
+house1.translateX(-25);
+house1.translateZ(-28);
+scene.add(house1);
+const house2 = new THREE.Mesh( new THREE.BoxGeometry(5, 0.1, 5, 1, 1, 1), new THREE.MeshBasicMaterial({map: label2_image}));
+house2.translateX(0);
+house2.translateZ(-18);
+scene.add(house2);
+
+
+//for(var i=0; i<projectData.length; i++){
+//  projects.push(new ProjectCylinder(scene));
+//}
+//var tempprojk = 0;
+//for(var i=0; i<2; i++){
+//  for(var j=0; j<3; j++){
+//    if(i<2 && j<3){
+//      projects[tempprojk].changeX(-10 -10*i );
+//      projects[tempprojk].changeZ(-10 - 10*j);
+//      tempprojk++;
+//    }
+//  }
+//}
+//  console.log(tempprojk, projects.length, projectData.length);
+//for(var i=tempprojk; i<projectData.length; i++){
+//  projects[tempprojk].changeX(projectData[tempprojk].posx);
+//  projects[tempprojk].changeZ(-projectData[tempprojk].posz+2);
+//  console.log(tempprojk, projects.length, projectData.length);
+//  tempprojk++;
+//  console.log(tempprojk);
+//}
+//
+//var temptreek = 0;
+//for(var i=0; i<48; i++){
+//    trees.push(new Tree(scene));
+//}
+//for(var i=0; i<4; i++){
+//  for(var j=0; j<4; j++){
+//    if(i==0 || j==0 || i==3 || j==3){
+//      trees[temptreek].changeX( 5+i*12);
+//      trees[temptreek].changeZ( 5+j*12);
+//      temptreek++;
+//    }
+//  }
+//}
+//for(var i=0; i<4; i++){
+//  for(var j=0; j<4; j++){
+//    if(i==0 || j==0 || i==3 || j==3){
+//      trees[temptreek].changeX(-5-i*12);
+//      trees[temptreek].changeZ( 5+j*12);
+//      temptreek++;
+//    }
+//  }
+//}
+//for(var i=0; i<4; i++){
+//  for(var j=0; j<4; j++){
+//    if(i==0 || j==0 || i==3 || j==3){
+//      trees[temptreek].changeX( 5+i*12);
+//      trees[temptreek].changeZ(-5-j*12);
+//      temptreek++;
+//    }
+//  }
+//}
+//for(var i=0; i<4; i++){
+//  for(var j=0; j<4; j++){
+//    if(i==0 || j==0 || i==3 || j==3){
+//      trees[temptreek].changeX(-5-i*12);
+//      trees[temptreek].changeZ(-5-j*12);
+//      temptreek++;
+//    }
+//  }
+//}
+//for(var i=0; i<6; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(i*12);
+//  mountain[i].data.translateZ(-68);
+//}
+//for(var i=6; i<12; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(-(i-6)*12);
+//  mountain[i].data.translateZ(-68);
+//}
+//for(var i=12; i<18; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(-70);
+//  mountain[i].data.translateZ((i-12)*12);
+//}
+//for(var i=18; i<24; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(-70);
+//  mountain[i].data.translateZ(-(i-18)*12);
+//}
+//for(var i=24; i<30; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(70);
+//  mountain[i].data.translateZ((i-24)*12);
+//}
+//for(var i=30; i<36; i++){
+//  mountain.push(new Mountain(scene));
+//  mountain[i].data.translateX(70);
+//  mountain[i].data.translateZ(-(i-30)*12);
+//}
+//
+//// Lights
+//const pointLight = new THREE.PointLight(0xffffff);
+//pointLight.position.set(0, 50, 0);
 //const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight);
+//scene.add(ambientLight);
 //const lightHelper = new THREE.PointLightHelper(pointLight);
 //const gridHelper = new THREE.GridHelper(1000,1000);
 //scene.add(lightHelper, gridHelper); 
@@ -381,16 +512,15 @@ controls.dynamicDampingFactor = 0.3;
 function animate() {
   requestAnimationFrame(animate);
 
-  planet.rotation.x += 0.01;
-  planet.rotation.y += 0.005;
-  planet.rotation.z += 0.01;
-  player.rotation.y += 0.05;
-
-  projects.forEach(e => {
-    e.ball.rotation.x += 0.1;
-    //e.ball.rotation.y += 0.01;
-    e.ball.rotation.z += 0.1;
-  });
+  //planet.rotation.x += 0.01;
+  //planet.rotation.y += 0.005;
+  //planet.rotation.z += 0.01;
+  //player.rotation.y += 0.05;
+  //projects.forEach(e => {
+  //  e.ball.rotation.x += 0.1;
+  //  //e.ball.rotation.y += 0.01;
+  //  e.ball.rotation.z += 0.1;
+  //});
 
   controls.update();
   renderer.render(scene, camera);
@@ -401,19 +531,23 @@ document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
   document.getElementById('pressSpace').style.display = 'none';
     var keyCode = event.which;
-    console.log(keyCode)
-    if (keyCode == 87 && (scene.position.z<(BORDER_LIMIT-BORDER)/2)) {
+    //console.log(keyCode)
+    if (keyCode == 87 && movement[PLAYER_POSZ+1][PLAYER_POSX]==0) {         
         scene.position.z += WALK_SPEED;
         player.position.z -= WALK_SPEED;
-    } else if (keyCode == 83 && (scene.position.z>-(BORDER_LIMIT-BORDER)/2)) {
+        PLAYER_POSZ++;
+    } else if (keyCode == 83 && movement[PLAYER_POSZ-1][PLAYER_POSX]==0) {
       scene.position.z -= WALK_SPEED;
       player.position.z += WALK_SPEED;
-    } else if (keyCode == 65 && (scene.position.x<(BORDER_LIMIT-BORDER)/2)) {
+      PLAYER_POSZ--;
+    } else if (keyCode == 65 && movement[PLAYER_POSZ][PLAYER_POSX+1]==0) {
       scene.position.x += WALK_SPEED;
       player.position.x -= WALK_SPEED;
-    } else if (keyCode == 68 && (scene.position.x>-(BORDER_LIMIT-BORDER)/2)) {
+      PLAYER_POSX++;
+    } else if (keyCode == 68 && movement[PLAYER_POSZ][PLAYER_POSX-1]==0) {
       scene.position.x -= WALK_SPEED;
       player.position.x += WALK_SPEED;
+      PLAYER_POSX--;
     } else if (keyCode == 73) {
       if(document.getElementById('bag').style.display === 'none'){
         document.getElementById('bag').style.display = 'block'
@@ -427,17 +561,23 @@ function onDocumentKeyDown(event) {
         document.getElementById('tutorial').style.display = 'none'
       }
     } else if(keyCode == 32){
-      console.log(scene.position)
+      console.log(scene.position, PLAYER_POSZ, PLAYER_POSX)
+    }
+
+    if(hotspot[PLAYER_POSZ][PLAYER_POSX]>-1){
+      document.getElementById('pressSpace').style.display = 'block';
+      document.getElementById('bagtitle').innerHTML =projectData[hotspot[PLAYER_POSZ][PLAYER_POSX]].title;
+      document.getElementById('bagtext').innerHTML = projectData[hotspot[PLAYER_POSZ][PLAYER_POSX]].details;
+      document.getElementById('bagimage').innerHTML = `<img src="${projectData[hotspot[PLAYER_POSZ][PLAYER_POSX]].image}" class = "bagimage"/>`;
     }
     // Press Space
-  projectData.forEach(e => {
-    var dist = Math.sqrt(Math.pow(scene.position.x - e.posx,2)+Math.pow(scene.position.z - e.posz, 2));
-    if(dist <= e.rad){
-      document.getElementById('pressSpace').style.display = 'block';
-      document.getElementById('bagtitle').innerHTML = e.title;
-      document.getElementById('bagtext').innerHTML = e.details;
-      document.getElementById('bagimage').innerHTML = `<img src="${e.image}" class = "bagimage"/>`;
-
-    }
-  });
+  //projectData.forEach(e => {
+  //  var dist = Math.sqrt(Math.pow(scene.position.x - e.posx,2)+Math.pow(scene.position.z - e.posz, 2));
+  //  if(dist <= e.rad){
+  //    document.getElementById('pressSpace').style.display = 'block';
+  //    document.getElementById('bagtitle').innerHTML = e.title;
+  //    document.getElementById('bagtext').innerHTML = e.details;
+  //    document.getElementById('bagimage').innerHTML = `<img src="${e.image}" class = "bagimage"/>`;
+  //  }
+  //});
 };
