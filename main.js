@@ -1,6 +1,7 @@
 import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { BoxGeometry } from 'three';
 
 // VARIABLES
 
@@ -189,8 +190,7 @@ const projectData = [
     "image": "https://raw.githubusercontent.com/RishavMz/Mesh/main/images/dp.jpg",
     "title": "RISHAV MAZUMDAR",
     "details": "<ul><li>Rishav Mazumdar currently resides in Dhanbad, Jharkhand and is pursuing his undergraduate in Electronics and Communication Engineering from Indian Institute of Information Technology, Ranchi.</li><br/><li>A passionate Programmer with strong interest towards writing beautiful code to solve a task efficiently.</li><br/><li>Always ready to grasp new skils and learn further to be better in Software and Web Development.</li></ul>"
-  },
-  
+  }, 
 ]
 // SETUP
 
@@ -252,6 +252,63 @@ const tree_image2 = textureLoader.load('https://raw.githubusercontent.com/Rishav
 const mountain_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/mountain.png');
 const label1_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label1.jpg');
 const label2_image = textureLoader.load('https://raw.githubusercontent.com/RishavMz/Mesh/main/textures/label2.jpg');
+const label3_image = textureLoader.load('./textures/label3.jpg');
+
+
+const c_image        =  textureLoader.load("./images/toolbox/c.png       ");     
+const cpp_image      =  textureLoader.load("./images/toolbox/cpp.png      ");    
+const css_image      =  textureLoader.load("./images/toolbox/css.png     ");     
+const docker_image   =  textureLoader.load("./images/toolbox/docker.png  ");  
+const express_image  =  textureLoader.load("./images/toolbox/express.png "); 
+const git_image      =  textureLoader.load("./images/toolbox/git.png     ");     
+const github_image   =  textureLoader.load("./images/toolbox/github.png  ");
+const html_image     =  textureLoader.load("./images/toolbox/html.png    ");    
+const java_image     =  textureLoader.load("./images/toolbox/java.png    ");    
+const jquery_image   =  textureLoader.load("./images/toolbox/jquery.jpg  ");  
+const js_image       =  textureLoader.load("./images/toolbox/js.jpg      ");      
+const linux_image    =  textureLoader.load("./images/toolbox/linux.png   ");   
+const mongo_image    =  textureLoader.load("./images/toolbox/mongo.png   ");   
+const mysql1_image   =  textureLoader.load("./images/toolbox/mysql1.png  ");  
+const nodejs_image   =  textureLoader.load("./images/toolbox/nodejs.png  ");  
+const php_image      =  textureLoader.load("./images/toolbox/php.png     ");    
+const postgres_image =  textureLoader.load("./images/toolbox/postgres.png");
+const python_image   =  textureLoader.load("./images/toolbox/python.png  ");  
+const react_image    =  textureLoader.load("./images/toolbox/react.png   ");   
+const redis_image    =  textureLoader.load("./images/toolbox/redis.png   ");   
+
+
+const toolbox = [
+  { "id": 0, "posx":5 , "posz":5   , "image": c_image},
+  { "id": 1, "posx":5 , "posz":10  , "image": cpp_image},
+  { "id": 2, "posx":5 , "posz":15  , "image": python_image},
+  { "id": 3, "posx":5 , "posz":20  , "image": java_image},
+  { "id": 4, "posx":5 , "posz":25  , "image": js_image},
+  { "id": 5, "posx":10 , "posz":5  , "image": nodejs_image},
+  { "id": 6, "posx":10 , "posz":10 , "image": react_image},
+  { "id": 7, "posx":10 , "posz":15 , "image": jquery_image},
+  { "id": 8, "posx":10 , "posz":20 , "image": php_image},
+  { "id": 9, "posx":10 , "posz":25 , "image": express_image},
+  { "id": 10, "posx":15 , "posz":5  , "image": html_image},
+  { "id": 11, "posx":15 , "posz":10 , "image": css_image},
+  { "id": 12, "posx":15 , "posz":15 , "image": postgres_image},
+  { "id": 13, "posx":15 , "posz":20 , "image": mysql1_image},
+  { "id": 14, "posx":15 , "posz":25 , "image": mongo_image},
+  { "id": 15, "posx":20 , "posz":5  , "image": redis_image},
+  { "id": 16, "posx":20 , "posz":10 , "image": git_image},
+  { "id": 17, "posx":20 , "posz":15 , "image": github_image},
+  { "id": 18, "posx":20 , "posz":20 , "image": linux_image},
+  { "id": 19, "posx":20 , "posz":25 , "image": docker_image},
+]
+
+const tools = [];
+let toolid = 0;
+toolbox.forEach((data) => {
+  tools.push(new THREE.Mesh( new THREE.BoxGeometry(1, 1, 1, 1, 1, 1), new THREE.MeshBasicMaterial({map: data.image})));
+  tools[toolid].translateX(data.posx + 20);
+  tools[toolid].translateZ(- data.posz);
+  tools[toolid].translateY(2)
+  scene.add(tools[toolid++]);
+})
 
 tree_image2.wrapS = THREE.RepeatWrapping;
 tree_image2.wrapT = THREE.RepeatWrapping;
@@ -392,6 +449,10 @@ const label2 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new TH
 label2.translateX(0);
 label2.translateZ(-12);
 scene.add(label2);
+const label3 = new THREE.Mesh( new THREE.BoxGeometry(2, 2, 0.1, 1, 1, 1), new THREE.MeshBasicMaterial({map: label3_image}));
+label3.translateX(28);
+label3.translateZ(0);
+scene.add(label3);
 
 const house1 = new THREE.Mesh( new THREE.BoxGeometry(15, 0.1, 25, 1, 1, 1), new THREE.MeshBasicMaterial({map: label1_image}));
 house1.translateX(-25);
@@ -401,6 +462,10 @@ const house2 = new THREE.Mesh( new THREE.BoxGeometry(5, 0.1, 5, 1, 1, 1), new TH
 house2.translateX(0);
 house2.translateZ(-18);
 scene.add(house2);
+const house3 = new THREE.Mesh( new THREE.BoxGeometry(25, 0.1, 25, 1, 1, 1), new THREE.MeshBasicMaterial({map: label3_image}));
+house3.translateX(35);
+house3.translateZ(-15);
+scene.add(house3);
 
 addObstacle();
 
@@ -421,6 +486,11 @@ controls.dynamicDampingFactor = 0.3;
 
 function animate() {
   requestAnimationFrame(animate);
+
+  toolid = 0;
+  for(var i=0; i<tools.length; i++){
+    tools[toolid++].rotation.y += 0.01;
+  }
 
   controls.update();
   renderer.render(scene, camera);
